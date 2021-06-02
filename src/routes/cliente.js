@@ -46,7 +46,6 @@ router.get('/read/:id', async (req, res) => {
         console.log("id para ler",id)
         const result = await modelCliente.query(`select * from cliente where idCliente = ${id} limit 1`)
         console.log("result", result)
-        
         return res.status(200).json(result)
     } catch (error) {
         if (error.errno === 1064) {

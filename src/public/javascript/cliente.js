@@ -40,7 +40,7 @@ document.getElementById('btnPesquisar').addEventListener('click', async (e) => {
                           <button class="btn btn-dark" onclick="Editar(${item.idCliente})">Editar</button>
                         </td>
                         <td>
-                            <button class="btn btn-danger" onclick="Excluir(this,${item.idCliente})">Excluir</button>
+                            <button class="btn btn-danger"  onclick="Excluir(this,${item.idCliente})">Excluir</button>
                         </td>
                     </tr>
                 `);
@@ -57,7 +57,7 @@ async function Editar(id) {
     document.getElementById('sobrenome').value = json[0].sobreNome
 }
 
-async function Excluir(index, id){
+async function Excluir(index, id) {
     const response = await axios.delete(`/cliente/excluir/${id}`)
     let i = index.parentNode.parentNode.rowIndex;
     document.getElementById("TableCliente").deleteRow(i);
