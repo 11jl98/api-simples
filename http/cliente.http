@@ -1,0 +1,28 @@
+GET  http://localhost:8000/cliente/
+
+
+###
+
+POST   http://localhost:8000/cliente
+Content-Type: application/json
+
+{
+    "nome":"toma ",
+    "sobreNome":"no cu"
+}
+###
+PUT  http://localhost:8000/cliente
+Content-Type: application/json
+
+{
+    "idCliente": 5,
+    "nome":"ocupado ",
+    "sobreNome":"espaco"
+}
+### 
+DELETE   http://localhost:8000/cliente
+Content-Type: application/json
+
+{
+    "idCliente": 5
+}
