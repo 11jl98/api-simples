@@ -1,0 +1,28 @@
+GET  http://localhost:8000/produtos/read/3
+
+
+###
+
+POST   http://localhost:8000/produtos/save
+Content-Type: application/json
+
+{
+    "nome":"toma",
+    "valor":1.99
+}
+###
+GET   http://localhost:8000/produtos/read/5
+Content-Type: application/json
+
+{
+    "idProduto": 5,
+    "nome":"ocupado",
+    "valor":58.30
+}
+### 
+DELETE   http://localhost:8000/cliente
+Content-Type: application/json
+
+{
+    "idCliente": 5
+}

@@ -9,7 +9,8 @@ router.get('/', async (req, res) => {
 
 router.get('/read', async (req, res) => {
     try {
-       
+        const result = await modelCliente.query('select * from cliente;')
+        return res.status(200).json(result)
     } catch (error) {
         if (error.errno === 1064) {
             return res.status(400).send(error)

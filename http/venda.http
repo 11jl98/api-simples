@@ -1,0 +1,29 @@
+GET  http://localhost:8000/vendas/read
+
+
+###
+
+POST   http://localhost:8000/vendas/save
+Content-Type: application/json
+
+{
+    "idCliente":23,
+    "valor":10.52,
+    "dadosAdicional": "teste"
+}
+###
+PUT  http://localhost:8000/cliente
+Content-Type: application/json
+
+{
+    "idCliente": 5,
+    "nome":"ocupado ",
+    "sobreNome":"espaco"
+}
+### 
+DELETE   http://localhost:8000/cliente
+Content-Type: application/json
+
+{
+    "idCliente": 5
+}

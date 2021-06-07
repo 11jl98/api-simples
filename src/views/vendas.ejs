@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vendas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include('components/navbar'); %>
+            <div id="content">
+                <div class="container">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                role="tab" aria-controls="nav-home" aria-selected="true">Pedido</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                role="tab" aria-controls="nav-profile" aria-selected="false">Peças</a>
+                            <a class="nav-item nav-link" id="nav-pesquisa-tab" data-toggle="tab" href="#nav-pesquisa"
+                                role="tab" aria-controls="nav-pesquisa" aria-selected="false">Pesquisa</a>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab">
+                            <br>
+                            <form id="FormCadVenda">
+                                <div class="row" style="margin: 0;padding: 0">
+                                    <div class="form-group col-md-2" style="padding-left:15px;display: none;">
+                                        <label>Código</label>
+                                        <input type="text" disabled class="form-control" id="txtCodVenda" />
+                                    </div>
+                                    <br>
+                                    <div class="form-group col-md-2">
+                                        <label>Cód. referência</label>
+                                        <input type="text" class="form-control" id="txtCodReferencia" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Cliente</label>
+                                        <select class="form-control" id="txtCliente">
+                                            <option value="0">
+                                                ----- Selecione -----
+                                            </option>
+                                            <% for(let i = 0; i < cliente.length;i++){ %>
+                                                <option value="<%= cliente[i].idCliente %>">
+                                                    <%= cliente[i].nome %>
+                                                </option>
+                                                <% }%>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="dinheiro">R$ Valor Total</label>
+                                        <input type="text" id="txtValorTotal" name="dinheiro" disabled
+                                            class="dinheiro form-control" style="display:inline-block" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Dados Adicionais</label>
+                                        <input type="text" class="form-control" id="txtDadosAdicionais" />
+                                    </div>
+                                </div>
+                                <button style="margin-left: 15px" type="submit" id="BtnSalvarVenda"
+                                    class="btn btn-dark">Salvar</button>
+                                <button style="margin-left: 15px" type="submit" id="BtnNovoVenda"
+                                    class="btn btn-dark">Novo</button>
+                                <button type="submit" style="margin:10px;" id="BtnPDF"
+                                    class="btn btn-dark">Imprimir</button>
+
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <br>
+                            <form id="FormCadVendaPRODUTO">
+                                <div class="row" style="margin: 0;padding: 0">
+                                    <div class="form-group col-md-1" style="padding-left:15px;">
+                                        <label>ID</label>
+                                        <input type="text" disabled class="form-control" id="txtIDPRODUTOVENDA" />
+                                    </div>
+                                    <br>
+                                    <div class="form-group col-md-4">
+                                        <label>Produto</label>
+                                        <select class="form-control" id="txtCliente">
+                                            <option value="0">
+                                                ----- Selecione -----
+                                            </option>
+                                            <% for(let i = 0; i < produtos.length;i++){ %>
+                                                <option value="<%= produtos[i].idProduto %>">
+                                                    <%= produtos[i].nome %>
+                                                </option>
+                                                <% }%>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Quantidade</label>
+                                        <input onchange="SomarValorTotal()" value="1" type="text"
+                                            class="form-control" id="txtQUANTIDADE" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Valor Unitario</label>
+                                        <input type="text" onchange="SomarValorTotal()" class="form-control"
+                                            id="txtValorUnitario" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Valor Total</label>
+                                        <input type="text" disabled class="form-control" id="txtVALOR" />
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Dados Adicionais</label>
+                                        <input type="text" class="form-control" id="txtDadosADICIONAISPRODUTO" />
+                                    </div>
+                                </div>
+                                <button style="margin-left: 15px" type="submit" id="BtnSalvarPeca"
+                                    class="btn btn-dark">Adicionar</button>
+                                <button style="margin-left: 15px" type="submit" id="BtnNovaPeca"
+                                    class="btn btn-dark">Novo</button>
+                            </form>
+                            <br>
+                            <div>
+                                <table class="table table-dark" id="TableVendaProdutos">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Quantidade</th>
+                                            <th scope="col">Valor</th>
+                                            <th scope="col">Excluir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <br>
+                            <form id="FormCadAluguelFINANCEIRO">
+                                <div class="row" style="margin: 0;padding: 0">
+                                    <div class="form-group col-md-1" style="padding-left:15px;display: none;">
+                                        <label>ID</label>
+                                        <input type="text" disabled class="form-control" id="txtIDFINANCEIRO_ALUGUEL" />
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>
+                                            <a href="#openModal" onclick="GridForma()">
+                                                Forma de pagemento
+                                                <i style="cursor:pointer;">
+                                                    <i style="cursor:pointer;">
+                                                        +
+                                                    </i>
+                                                </i>
+                                            </a>
+                                        </label>
+                                        <select class="form-control" id="txtIDFORMAPAGAMENTO">
+
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Data</label>
+                                        <input type="date" class="form-control" id="DataVencimento" />
+                                    </div>
+                                </div>
+
+                                <button style="margin-left: 15px" type="submit" id="BtnSalvarFinanceiro"
+                                    class="btn btn-dark">Salvar</button>
+                                <button style="margin-left: 15px" type="submit" id="BtnNovoFinanceiro"
+                                    class="btn btn-dark">Novo</button>
+
+                                <button style="float: right;" type="submit" id="BtnGerarDuplicatas"
+                                    class="btn btn-dark">Gerar Duplicatas</button>
+                                <button style="float: right;margin-right: 10px;" type="submit"
+                                    id="BtnImprimirDuplicatas" class="btn btn-dark">Imprimir Duplicatas</button>
+
+                            </form>
+                            <br>
+                            <div>
+                                <table class="table table-dark" id="TableAluguelDuplicatas">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nº. Parcela</th>
+                                            <th scope="col">Valor Duplicata</th>
+                                            <th scope="col">Vencimento</th>
+                                            <th scope="col">Editar</th>
+                                            <th scope="col">Excluir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-relatorio" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <br>
+                            <div class="container">
+
+                                <h4 style="text-align: center;">Relatório de Vendas</h4>
+                                <div class="card" style="width: 18rem; margin-top: 30px; margin-left: 10px;">
+                                    <div class="card-body" style="display: inline-block;">
+                                        <label>Data Inicial</label>
+                                        <input type="date" class="form-control" id="DataInicial" />
+                                        <label>Data Final</label>
+                                        <input type="date" class="form-control" id="DataFinal" />
+
+                                        <button style="margin-top: 15px;" type="button" id="btngerar"
+                                            class="btn btn-dark">Gerar Relatório</button>
+                                        <button style="margin-top: 10px;" type="button" id="btnImprimir"
+                                            class="btn btn-dark">Imprimir Relatório</button>
+
+                                    </div>
+                                </div>
+
+
+                                <br>
+
+
+                            </div>
+                            <br>
+                            <div class="card" style="margin-left: 350px; border: none;" id="TableRelatorio">
+                                <table class="table table-sm" id="todasVendas"
+                                    style="border: 2px solid #eee7e7; width: 800px; margin-top: -335px ; box-shadow: 4px 4px 4px #777474; float:right;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Data</th>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Valor Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-pesquisa" role="tabpanel" aria-labelledby="nav-pesquisa-tab">
+                            <br>
+                            <div id="demo" class="row">
+                                <div class="form-group  col-md-4">
+                                    <label>Pesquisar</label>
+                                    <input type="text" class="form-control" id="txtPesquisa" placeholder="Pesquisar" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Filtro</label>
+                                    <select class="form-control" id="selectColuna">
+                                        <option value="NOME" selected>Nome</option>
+                                        <option value="CPF_CNPJ">Cpf/Cnpj</option>
+                                        <option value="DT">Data</option>
+                                    </select>
+                                </div>
+                                <table class="table table-dark" id="tableVenda">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Data</th>
+                                            <th scope="col">Valor</th>
+                                            <th scope="col">Excluir</th>
+                                            <th scope="col">Editar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination" id="paginacao">
+                                        <li class="page-item">
+                                            <a class="page-link" type="button" id="AnteriorPagina">
+                                                << </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" type="button" id="ProximoPagina">>></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+        <script src="/javascript/vendas.js"></script>
+
+
+</body>
+
+</html>
